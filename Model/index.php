@@ -13,36 +13,15 @@
 	echo "Success: A proper connection to MySQL was made!" . "<br>";
 	echo "Host information: " . mysqli_get_host_info($mysqli) . "<br>";
 
-	$result = $mysqli -> query("show databases");
+	$result = $mysqli -> query("select * from product");
 	$row = $result -> fetch_all();
 	var_dump($row);
 	
 
 
+	$result = get123();
+	$sum = calculator($result);
 
-
-	$mysqli->select_db ("shoppingCart");
-
-	$result = $mysqli -> query("select * from product");	
-	$row = $result -> fetch_all();
-	var_dump($row);
-
-
-
-	class model {
+	$result = get456();
 	
-		
-	}
-
-
-	class view {
-	
-		
-	}
-
-
-	class controller {
-	
-		
-	}
 ?>
