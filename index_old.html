@@ -43,53 +43,54 @@
             </div>
         </div>
 
-<body bgcolor = "blue">
-    <table border = "0" align = "left" width = "1000" cellspacing = "2">
-        <tr bgcolor = "lightblue" height = "30" align = "center">
-            <td> </td>
-            <td>品項</td>
-            <td>價格</td>
-            <td>數量</td>
-            <td>訂購</td>
-        </tr>
 
-        
-    <?php
+		<form method = "post" action = "shoppingCart.php">
+        <div id ='product'>
+                <!--第一行-->
+                <div class = "product1">
+                    <td>
+                    	<?php "$i" ?> <br>
+                    <img src = "https://www.sweetandsavorybyshinee.com/wp-content/uploads/2013/01/Basic-French-Macarons-1.jpg"  width = "170px" height="180px" alt="...">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        數量
+                        </button>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#"> 1 </a>
+                        <a class="dropdown-item" href="#"> 2 </a>
+                        <a class="dropdown-item" href="#"> 3 </a>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-outline-info">想吃！</button>
+                    </td>
+                </div>
+        </div>
 
-        //列出錯誤資訊
-        error_reporting(E_ALL); 
-        ini_set('display_errors', 1);
+        <button id="Checkout" type="button" class="btn btn-secondary" value="Checkout">Checkout</button>
+		
+    </body>
 
-        require_once("mysql_dblink.php");
 
-        $mysqli_connect = new connect();
-        $conn = $mysqli_connect -> link_db(); //link_db()會retrun conn,需要一個變數來接收
-         
 
-        //選取產品資料
+<script type="text/javascript">
 
-        $conn -> select_db("shoppingCart"); //可以用接收到的conn來使用他有的function，select_database是 mysqli object的function，conn 是mysqli object
-        $result = $conn -> query ("select * from product"); 
-        $total_records = mysqli_num_fields($result); //查看result有幾筆資料，可用在for loop
-
-        for($i = 1; $i < $total_records ; $i++){
-
-            $row = $result -> fetch_assoc(); //取出每筆資料
-            echo "<tr align = 'center' bgcolor = 'lightblue'> ";
-            echo "<td>" . $row["ID"] . " </td> "; 
-            echo "<td>" . $row["Name"] . " </td> "; 
-            echo "<td>" . $row["Price"] . " </td> "; 
-            echo "<td> <input type = 'text' name = 'quantity' size = '5' value = '1'></td>";   
-            echo "<td> <input type = 'submit' value = '放入購物車'></td>";
-        
-        }
-        echo "</tr>";
-      
-        //mysqli_free_result($result);
-        //mysqli_close($conn); 錯了
-        $conn -> close();
-
-?>
-    </table>
-</body>
+    $(document).ready(function() {
+            $("#Checkout").click(function() { 
+                $.ajax({
+                    type: 'GET',
+                    url: '/Controller/productController.php',
+                    data: {test: 'getproduct', tests: 'woman'},
+                    success: function(msg) {
+                        console.log('data success: ' + msg);
+                    },
+                    error: function(msg) {
+                        console.log('failed: ' + msg);
+                    }
+                })
+            })
+        });
+    
+</script>
 </html>
